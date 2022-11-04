@@ -1,4 +1,5 @@
 import { Alert } from "react-bootstrap";
+
 const AlertBanner = ({ message, variant }) => {
   const alertMessage = message || "An unexpected error ocurred try again later";
   const alertVariant = variant || "danger";
