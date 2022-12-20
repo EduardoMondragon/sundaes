@@ -1,9 +1,13 @@
-import { render, screen } from "../../../test-utils/testing-libraries-utils";
+import {
+  findByText,
+  render,
+  screen,
+} from "../../../test-utils/testing-libraries-utils";
 import userEvent from "@testing-library/user-event";
 import Options from "../options";
 
-describe("ok", () => {
-  it.only("update scoops subtotal when scoops change", async () => {
+describe("assert initial and updated subtotals scoops and toppings", () => {
+  it("[scoops] update subtotal when scoops amount change", async () => {
     render(<Options optionType="scoops" />);
     const user = userEvent.setup();
 
@@ -27,5 +31,34 @@ describe("ok", () => {
     await user.clear(chocolateInput);
     await user.type(chocolateInput, "2");
     expect(subtotalScoop).toHaveTextContent("6.00");
+  });
+
+  it("[toppings] update subtotal when toppings amount change", async () => {
+    render(<Options optionType="toppings" />);
+    const user = userEvent.setup();
+
+    // make sure subtotal starts out $0.00
+    const toppingsSubtotal = screen.getByText("toppings total :", {
+      exact: false,
+    });
+    expect(toppingsSubtotal).toHaveTextContent("0.00");
+
+    // select one topping and check the subtotal
+    const toppingCheckbox = await screen.findByText("M&Ms");
+    expect(toppingCheckbox).toBeInTheDocument();
+    await user.click(toppingCheckbox);
+
+    expect(toppingsSubtotal).toHaveTextContent("1.50");
+
+    // select another topping and check the subtotal
+    const gummiBearsToppingCheckbox = await screen.findByText("Hot fudge");
+    expect(gummiBearsToppingCheckbox).toBeInTheDocument();
+    await user.click(gummiBearsToppingCheckbox);
+
+    expect(toppingsSubtotal).toHaveTextContent("3.00");
+
+    // unselect one selected topping and check the subtotal
+    await user.click(gummiBearsToppingCheckbox);
+    expect(toppingsSubtotal).toHaveTextContent("1.50");
   });
 });

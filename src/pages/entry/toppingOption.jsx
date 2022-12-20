@@ -4,8 +4,11 @@ import { useOrderDetails } from "../../contexs/orderDetails";
 const ToppingOption = ({ name, imagePath }) => {
   const { updateItemCount } = useOrderDetails();
   //
-  const handleChange = (e) =>
-    updateItemCount(name, parseInt(e.target.value), "toppings");
+  const handleChange = (checked) => {
+    console.log(checked);
+    const itemAmount = checked ? 1 : 0;
+    updateItemCount(name, itemAmount, "toppings");
+  };
 
   return (
     <Col xs={12} sm={6} md={4} lg={3} style={{ textAlign: "center" }}>
@@ -24,9 +27,9 @@ const ToppingOption = ({ name, imagePath }) => {
         </Form.Label>
         <Col xs="5" style={{ textAlign: "left" }}>
           <Form.Control
-            type="number"
+            type="checkbox"
             defaultValue={0}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e.target.checked)}
             disabled={false}
           ></Form.Control>
         </Col>

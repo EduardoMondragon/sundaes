@@ -25,10 +25,6 @@ const Options = ({ optionType }) => {
       });
   }, [optionType]);
 
-  if (error) {
-    return <AlertBanner />;
-  }
-
   const ItemComponent = optionType === "scoops" ? ScoopOption : ToppingOptions;
   const optionItems = items.map((item) => (
     <ItemComponent
@@ -39,7 +35,9 @@ const Options = ({ optionType }) => {
   ));
 
   const title = optionType[0].toUpperCase() + optionType.slice(1).toLowerCase();
-  return (
+  return error ? (
+    <AlertBanner />
+  ) : (
     <>
       <h2>{title}</h2>
       <p>{formatCurrency(pricePerItem[optionType])} each</p>

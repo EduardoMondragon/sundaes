@@ -4,10 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { OrderPhasesProvider } from "./contexs/orderPhases";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <OrderPhasesProvider>
+      <App />
+    </OrderPhasesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

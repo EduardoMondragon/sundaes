@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useOrderPhases } from "../../contexs/orderPhases";
 
 const SummaryForm = () => {
+  const { updatePhase } = useOrderPhases();
   const [ableToConfirm, setAbleToConfirm] = useState(false);
   const [termsAndConditionsVisible, setTermsAndConditionsVisible] =
     useState(false);
@@ -18,7 +20,7 @@ const SummaryForm = () => {
   };
 
   const confirmOrder = () => {
-    alert("Order confirmed");
+    updatePhase("confirmation");
   };
 
   return (
