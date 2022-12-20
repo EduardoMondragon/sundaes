@@ -15,8 +15,10 @@ pipeline{
             }
         }
         stage("Test"){
-            steps {
-                sh 'npm test'
+            steps{
+                dir("sundaes"){
+                    sh "npm run test"
+                }
             }
         }
     }
