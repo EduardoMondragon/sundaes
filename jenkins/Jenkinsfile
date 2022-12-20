@@ -9,16 +9,12 @@ pipeline{
         }
         stage("Build"){
             steps{
-                dir("sundaes"){
-                    sh "npm install"
-                }
+                sh "npm install"
             }
         }
         stage("Test"){
             steps{
-                dir("sundaes"){
-                    sh "npm test"
-                }
+                sh "npm test"
             }
         }
     }
