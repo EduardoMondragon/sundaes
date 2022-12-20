@@ -1,6 +1,5 @@
 pipeline{
     agent any 
-    tools {nodejs "node"}
     stages{
         stage("Clean Up"){
             steps{
@@ -9,12 +8,16 @@ pipeline{
         }
         stage("Build"){
             steps{
-                sh "npm install"
+                dir("sundaes"){
+                    sh "npm install"
+                }
             }
         }
         stage("Test"){
             steps{
-                sh "npm test"
+                dir("sundaes"){
+                    sh "npm test"
+                }
             }
         }
     }
