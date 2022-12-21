@@ -1,10 +1,12 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "../../../test-utils/testing-libraries-utils";
 import SummaryForm from "../summaryForm";
 import userEvent from "@testing-library/user-event";
 
 describe("check inital elements", () => {
-  beforeEach(() => {
+  let user;
+  beforeEach(async () => {
     render(<SummaryForm />);
+    user = userEvent.setup();
   });
   it("confirm button should be disable  when checkbox is unchecked", async () => {
     const checkBoxElement = screen.getByTestId("checkbox");
@@ -15,8 +17,6 @@ describe("check inital elements", () => {
   });
 
   it("confirm button should be enable  when checkbox is unchecked", async () => {
-    const user = userEvent.setup();
-
     const checkBoxElement = screen.getByTestId("checkbox");
     const confirmButtonElement = screen.getByTestId("confirmBtn");
 
@@ -26,12 +26,11 @@ describe("check inital elements", () => {
   });
 
   it("popover response the hover", async () => {
-    const user = userEvent.setup();
     // pop over star hided
     const nullPopOverElement = screen.queryByText(
       /No ice cream will acutally delivered/i
     );
-    expect(nullPopOverElement).toBe(null);
+    expect(nullPopOverElement).not.toBeInTheDocument();
 
     // popover apears when mouse is over the checkbox terms and conditions message
     const labelTermsElement = screen.getByTestId("labelTerms");
